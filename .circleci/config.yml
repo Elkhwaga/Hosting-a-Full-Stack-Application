@@ -17,11 +17,11 @@ jobs:
             - node_modules
           key: v1-dependencies-{{checksum "package.json"}}
       - run:
-        name: install Frontend
-        command: npm run frontend:install
+          name: install Frontend
+          command: npm run frontend:install
       - run:
-        name: Build Frontend
-        command: npm run frontend:build
+          name: Build Frontend
+          command: npm run frontend:build
       - aws-cli/install
 
 workflows:
