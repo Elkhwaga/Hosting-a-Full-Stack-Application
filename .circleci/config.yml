@@ -3,7 +3,7 @@ orbs:
   node: circleci/node@5.0.2
   aws-cli: circleci/aws-cli@3.0.0
 jobs:
-  frontEnd:
+  frontend-build:
     docker:
       - image: "cimg/base:stable"
     steps:
@@ -25,11 +25,21 @@ jobs:
           name: Build Frontend
           command: |
             npm run frontend:build
-      - aws-cli/install
+  frontend-deploy:
+    docker:
+      - image: "cimg/base:stable"
+    steps:
+      - node/install
+      - checkout
+      - aws-cli/setup
       - run:
           name: Deploy Frontend
           command: npm run frontend:deploy
+
 workflows:
   build_and_deploy:
     jobs:
-      - frontEnd
+      - frontend-build
+      - frontend-deploy:
+        requires:
+          - frontend-build
