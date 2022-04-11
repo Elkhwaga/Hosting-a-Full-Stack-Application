@@ -4,7 +4,7 @@ orbs:
   aws-cli: circleci/aws-cli@2.0.0
 
 jobs:
-  frontend:
+    frontend:
       executor: node/default
     steps:
       - checkout
