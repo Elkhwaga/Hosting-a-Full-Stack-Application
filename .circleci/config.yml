@@ -3,7 +3,7 @@ orbs:
   node: circleci/node@5.0.2
   aws-cli: circleci/aws-cli@3.0.0
 jobs:
-  udagram-frontend:
+  build:
     docker:
       - image: 'cimg/base:stable'
     steps:
@@ -15,14 +15,16 @@ jobs:
             - v1-dependencies-
       - run:
           name: install dependencies Frontend
-          command: npm run frontend:install
+          command: |
+            npm run frontend:install
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{checksum "package.json"}}
       - run:
           name: Build Frontend
-          command: npm run frontend:build
+          command: |
+            npm run frontend:build
       - aws-cli/install
     - run:
         name: Deploy Frontend
