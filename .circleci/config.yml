@@ -8,12 +8,20 @@ jobs:
     executor: node/default
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{checksum "package.json"}}
+            - v1-dependencies-
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{checksum "package.json"}}
       - run:
-          name: install Frontend
-          command: npm run frontend:install
+        name: install Frontend
+        command: npm run frontend:install
       - run:
-          name: Build Frontend
-          command: npm run frontend:build
+        name: Build Frontend
+        command: npm run frontend:build
       - aws-cli/install
 
 workflows:
