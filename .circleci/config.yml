@@ -10,15 +10,15 @@ jobs:
         keys:
           - v1-dependencies-{{checksum "package.json"}}
           - v1-dependencies-
-        - run:
-          name: Frontend install dependencies
-          commend: npm frontend:install
-        - save_cache:
-          paths: node_modules
-        key: v1-dependencies-{{checksum "package.json"}}
-        - run:
-          name: Frontend Build
-          commend: npm run frontend:build
+      - run:
+        name: Frontend install dependencies
+        commend: npm frontend:install
+      - save_cache:
+        paths: node_modules
+      key: v1-dependencies-{{checksum "package.json"}}
+      - run:
+        name: Frontend Build
+        commend: npm run frontend:build
 
 workflows:
   build_deploy:
