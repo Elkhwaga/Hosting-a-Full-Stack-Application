@@ -4,8 +4,8 @@ orbs:
   aws-cli: circleci/aws-cli@3.0.0
 jobs:
   frontend:
-    executor: node/default
     steps:
+      - node/install
       - checkout
       - restore_cache:
           keys:
