@@ -5,7 +5,7 @@ orbs:
 
 jobs:
   frontend:
-    executor: node/default
+      executor: node/default
     steps:
       - checkout
       - restore_cache:
