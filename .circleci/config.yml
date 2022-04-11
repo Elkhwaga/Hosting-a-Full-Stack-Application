@@ -3,7 +3,7 @@ orbs:
   node: circleci/node@5.0.2
   aws-cli: circleci/aws-cli@3.0.0
 jobs:
-  build:
+  frontEnd:
     docker:
       - image: "cimg/base:stable"
     steps:
@@ -32,4 +32,4 @@ jobs:
 workflows:
   build_and_deploy:
     jobs:
-      - udagram-frontend
+      - frontEnd
