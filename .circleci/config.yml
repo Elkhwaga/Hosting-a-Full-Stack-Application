@@ -5,20 +5,20 @@ jobs:
     docker:
       - image: cimg/node:16.14.2
     steps:
-      - checkout
-      - restore_cache:
-        keys:
-          - v1-dependencies-{{checksum "package.json"}}
-          - v1-dependencies-
-      - run:
-        name: Frontend install dependencies
-        commend: npm frontend:install
-      - save_cache:
-        paths: node_modules
-      key: v1-dependencies-{{checksum "package.json"}}
-      - run:
-        name: Frontend Build
-        commend: npm run frontend:build
+        - checkout
+        - restore_cache:
+          keys:
+            - v1-dependencies-{{checksum "package.json"}}
+            - v1-dependencies-
+        - run:
+          name: Frontend install dependencies
+          commend: npm frontend:install
+        - save_cache:
+          paths: node_modules
+        key: v1-dependencies-{{checksum "package.json"}}
+        - run:
+          name: Frontend Build
+          commend: npm run frontend:build
 
 workflows:
   build_deploy:
