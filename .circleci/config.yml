@@ -34,13 +34,12 @@ jobs:
       - aws-cli/setup
       - run:
           name: Deploy Frontend
-          command: npm run frontend:deploy
+          command: |
+            npm run frontend:deploy
 
 workflows:
   version: 2
   build_and_deploy:
     jobs:
       - build
-      - deploy:
-        requires:
-          - build
+      - deploy
