@@ -36,13 +36,6 @@ jobs:
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
       - checkout
-      - restore_cache:
-          key: ng-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
-      - run: npm install
-      - save_cache:
-          key: ng-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
-          paths:
-            - "node_modules"
       - run:
           name: Front-End Install Karma Cli
           command: |
