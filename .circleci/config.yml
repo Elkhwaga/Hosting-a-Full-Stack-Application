@@ -5,12 +5,13 @@ orbs:
   browser-tools: circleci/browser-tools@1.2.3
   eb: circleci/aws-elastic-beanstalk@2.0.1
 jobs:
-  frontend-build:
+  frontend-build-deploy:
     docker:
       - image: "cimg/base:stable"
     steps:
       - node/install
       - checkout
+      - aws-cli/setup
       - restore_cache:
           keys:
             - v1-dependencies-{{checksum "package.json"}}
@@ -27,33 +28,38 @@ jobs:
           name: Build Frontend
           command: |
             npm run frontend:build
-  frontend-test:
-    working_directory: ~/udagram-forntend
-    docker:
-      - image: circleci/node:10-browsers
-    steps:
-      - node/install
-      - browser-tools/install-chrome
-      - browser-tools/install-chromedriver
-      - checkout
       - run:
-          name: Front-End Install Karma Cli
+          name: Deploy Frontend
           command: |
-            npm run frontend:karmaCli
-      - run:
-          name: Front-End Tests
-          command: |
-            npm run frontend:test
-      - run:
-          name: Front-End End-to-end Testing
-          command: |
-            npm run frontend:e2e
-  backend-build:
+            npm run frontend:deploy
+  # frontend-test:
+  #   working_directory: ~/udagram-forntend
+  #   docker:
+  #     - image: circleci/node:10-browsers
+  #   steps:
+  #     - node/install
+  #     - browser-tools/install-chrome
+  #     - browser-tools/install-chromedriver
+  #     - checkout
+  #     - run:
+  #         name: Front-End Install Karma Cli
+  #         command: |
+  #           npm run frontend:karmaCli
+  #     - run:
+  #         name: Front-End Tests
+  #         command: |
+  #           npm run frontend:test
+  #     - run:
+  #         name: Front-End End-to-end Testing
+  #         command: |
+  #           npm run frontend:e2e
+  backend-build-deploy:
     docker:
       - image: "cimg/base:stable"
     steps:
       - node/install
       - checkout
+      - eb/setup
       - restore_cache:
           keys:
             - v2-dependencies-{{checksum "package.json"}}
@@ -70,32 +76,13 @@ jobs:
           name: Build Backend
           command: |
             npm run backend:build
-  deploy:
-    docker:
-      - image: "cimg/base:stable"
-    steps:
-      - node/install
-      - checkout
-      - aws-cli/setup
-      - eb/setup
-      - run:
-          name: Deploy Frontend
-          command: |
-            npm run frontend:deploy
       - run:
           name: Deploy Front-End
           command: |
             npm run backend:deploy
-
 workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - frontend-build
-      - backend-build
-      - frontend-test:
-          requires:
-            - frontend-build
-      - deploy:
-          requires:
-            - frontend-test
+      - frontend-build-deploy
+      - backend-build-deploy
