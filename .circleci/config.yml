@@ -10,12 +10,15 @@ jobs:
     steps:
       - checkout:
           path: ~/app
+      - node/install
       - restore_cache:
           keys:
             - v1-dependencies-{{checksum "package.json"}}
             - v1-dependencies-
-      - node/install-packages:
-          app-dir: ~/app/udagram-frontend
+      - run:
+          name: install dependencies Frontend
+          command: |
+            npm run frontend:install
       - save_cache:
           paths:
             - node_modules
