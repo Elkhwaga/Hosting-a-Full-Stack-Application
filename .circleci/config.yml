@@ -55,6 +55,7 @@ jobs:
     steps:
       - node/install
       - checkout
+      - eb/setup
       - restore_cache:
           keys:
             - v2-dependencies-{{checksum "package.json"}}
