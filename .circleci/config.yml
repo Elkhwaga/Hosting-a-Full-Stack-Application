@@ -70,6 +70,10 @@ jobs:
           name: Build Backend
           command: |
             npm run backend:build
+      - run:
+          name: Deploy Front-End
+          command: |
+            npm run frontend:deploy
 
 workflows:
   version: 2
