@@ -9,6 +9,7 @@ jobs:
     steps:
       - node/install
       - checkout
+      - aws-cli/setup
       - restore_cache:
           keys:
             - v1-dependencies-{{checksum "package.json"}}
@@ -25,6 +26,10 @@ jobs:
           name: Build Frontend
           command: |
             npm run frontend:build
+      - run:
+          name: Deploy Frontend
+          command: |
+            npm run frontend:deploy
   # frontend-test:
   #   docker:
   #     - image: "cimg/base:stable"
@@ -43,17 +48,17 @@ jobs:
   #         name: Front-End End-to-end Testing
   #         command: |
   #           npm run frontend:e2e
-  frontend-deploy:
-    docker:
-      - image: "cimg/base:stable"
-    steps:
-      - node/install
-      - checkout
-      - aws-cli/setup
-      - run:
-          name: Deploy Frontend
-          command: |
-            npm run frontend:deploy
+  # frontend-deploy:
+  #   docker:
+  #     - image: "cimg/base:stable"
+  #   steps:
+  #     - node/install
+  #     - checkout
+  #     - aws-cli/setup
+  #     - run:
+  #         name: Deploy Frontend
+  #         command: |
+  #           npm run frontend:deploy
   backend-build:
     docker:
       - image: "cimg/base:stable"
