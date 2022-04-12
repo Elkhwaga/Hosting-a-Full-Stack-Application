@@ -64,9 +64,9 @@ workflows:
   build_and_deploy:
     jobs:
       - build-frontend
-      - build-backend:
+      - backend-build:
           requires:
             - build-frontend
       - frontend-deploy:
           requires:
-            - build-backend
+            - backend-build
