@@ -3,6 +3,7 @@ orbs:
   node: circleci/node@5.0.2
   aws-cli: circleci/aws-cli@3.0.0
   eb: circleci/aws-elastic-beanstalk@2.0.1
+  browser-tools: circleci/browser-tools@1.2.3
 jobs:
   frontend-build:
     docker:
@@ -29,10 +30,19 @@ jobs:
   frontend-test:
     working_directory: ~/udagram-forntend
     docker:
-      - image: circleci/node:10-browsers
+      - image: cimg/node:16.13.1-browsers
     steps:
       - node/install
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
       - checkout
+      - restore_cache:
+          key: ng-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
+      - run: npm install
+      - save_cache:
+          key: ng-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          paths:
+            - "node_modules"
       - run:
           name: Front-End Install Karma Cli
           command: |
@@ -40,11 +50,11 @@ jobs:
       - run:
           name: Front-End Tests
           command: |
-            npm run frontend:test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+            npm run frontend:test
       - run:
           name: Front-End End-to-end Testing
           command: |
-            npm run frontend:e2e npm run e2e -- --protractor-config=e2e/protractor-ci.conf.js
+            npm run frontend:e2e npm run e2e
   backend-build:
     docker:
       - image: "cimg/base:stable"
