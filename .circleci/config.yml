@@ -63,10 +63,10 @@ workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - build-frontend
+      - frontend-build
       - backend-build:
           requires:
-            - build-frontend
+            - frontend-build
       - frontend-deploy:
           requires:
             - backend-build
