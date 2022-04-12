@@ -10,7 +10,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "aws s3 cp --recursive --acl public-read ./www s3://mohamed-udagram/"
+    "deploy": "aws s3 cp --recursive --acl public-read ./www s3://mohamed-udagram/",
+    "karmaCli": "chmod +x bin/InstallKarmaCli.sh && bin/InstallKarmaCli.sh"
   },
   "private": true,
   "dependencies": {
