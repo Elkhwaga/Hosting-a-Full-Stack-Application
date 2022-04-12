@@ -36,12 +36,37 @@ jobs:
           name: Deploy Frontend
           command: |
             npm run frontend:deploy
+  backend-build:
+    docker:
+      - image: "cimg/base:stable"
+    steps:
+      - node/install
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{checksum "package.json"}}
+            - v1-dependencies-
+      - run:
+          name: install dependencies Backend
+          command: |
+            npm run backend:install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{checksum "package.json"}}
+      - run:
+          name: Build Backend
+          command: |
+            npm run backend:build
 
 workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - frontend-build
+      - build-frontend
+      - build-backend:
+          requires:
+            - build-frontend
       - frontend-deploy:
           requires:
-            - frontend-build
+            - build-backend
