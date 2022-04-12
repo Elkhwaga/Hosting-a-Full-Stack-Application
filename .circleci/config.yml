@@ -54,7 +54,7 @@ jobs:
       - run:
           name: Front-End End-to-end Testing
           command: |
-            npm run frontend:e2e npm run e2e
+            npm run frontend:e2e
   backend-build:
     docker:
       - image: "cimg/base:stable"
