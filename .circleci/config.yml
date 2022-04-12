@@ -87,4 +87,4 @@ workflows:
       #       - frontend-build
       - frontend-deploy:
           requires:
-            - backend-build
+            - frontend-build
