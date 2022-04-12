@@ -25,35 +25,35 @@ jobs:
           name: Build Frontend
           command: |
             npm run frontend:build
-  frontend-test:
+  # frontend-test:
+  #   docker:
+  #     - image: "cimg/base:stable"
+  #   steps:
+  #     - node/install
+  #     - checkout
+  #     - run:
+  #         name: Front-End Install Karma Cli
+  #         command: |
+  #           npm run frontend:karmaCli
+  #     - run:
+  #         name: Front-End Tests
+  #         command: |
+  #           npm run frontend:test
+  #     - run:
+  #         name: Front-End End-to-end Testing
+  #         command: |
+  #           npm run frontend:e2e
     docker:
       - image: "cimg/base:stable"
     steps:
       - node/install
       - checkout
+      - aws-cli/setup
       - run:
-          name: Front-End Install Karma Cli
+          name: Deploy Frontend
           command: |
-            npm run frontend:karmaCli
-      - run:
-          name: Front-End Tests
-          command: |
-            npm run frontend:test
-      - run:
-          name: Front-End End-to-end Testing
-          command: |
-            npm run frontend:e2e
-    # docker:
-    #   - image: "cimg/base:stable"
-    # steps:
-    #   - node/install
-    #   - checkout
-    #   - aws-cli/setup
-    #   - run:
-    #       name: Deploy Frontend
-    #       command: |
-    #         npm run frontend:deploy
-  # frontend-deploy:
+            npm run frontend:deploy
+  frontend-deploy:
   backend-build:
     docker:
       - image: "cimg/base:stable"
@@ -82,9 +82,9 @@ workflows:
   build_and_deploy:
     jobs:
       - frontend-build
-      - frontend-test:
-          requires:
-            - frontend-build
-      # - frontend-deploy:
+      # - frontend-test:
       #     requires:
-      #       - backend-build
+      #       - frontend-build
+      - frontend-deploy:
+          requires:
+            - backend-build
