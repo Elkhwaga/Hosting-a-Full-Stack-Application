@@ -30,7 +30,7 @@ jobs:
   frontend-test:
     working_directory: ~/udagram-forntend
     docker:
-      - image: cimg/node:16.13.1-browsers
+      - image: cimg/node:10-browsers
     steps:
       - node/install
       - browser-tools/install-chrome
