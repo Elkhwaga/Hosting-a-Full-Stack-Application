@@ -73,7 +73,7 @@ jobs:
       - run:
           name: Deploy Front-End
           command: |
-            npm run frontend:deploy
+            npm run backend:deploy
 
 workflows:
   version: 2
