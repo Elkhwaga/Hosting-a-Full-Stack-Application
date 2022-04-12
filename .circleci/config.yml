@@ -43,6 +43,7 @@ jobs:
   #         name: Front-End End-to-end Testing
   #         command: |
   #           npm run frontend:e2e
+  frontend-deploy:
     docker:
       - image: "cimg/base:stable"
     steps:
@@ -53,7 +54,6 @@ jobs:
           name: Deploy Frontend
           command: |
             npm run frontend:deploy
-  frontend-deploy:
   backend-build:
     docker:
       - image: "cimg/base:stable"
