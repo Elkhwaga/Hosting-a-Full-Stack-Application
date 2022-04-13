@@ -32,10 +32,13 @@ jobs:
           command: |
             npm run frontend:deploy
   # frontend-test:
+  #   working_directory: ~/udagram-forntend
   #   docker:
-  #     - image: "cimg/base:stable"
+  #     - image: circleci/node:10-browsers
   #   steps:
   #     - node/install
+  #     - browser-tools/install-chrome
+  #     - browser-tools/install-chromedriver
   #     - checkout
   #     - run:
   #         name: Front-End Install Karma Cli
