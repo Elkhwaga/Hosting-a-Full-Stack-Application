@@ -1,3 +1,3 @@
-eb init udagram-api -r us-east-1 -p node.js
+eb init udagram-api --region us-east-1 node.js
 eb use udagram-api-dev
 eb deploy
