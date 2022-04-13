@@ -3,9 +3,8 @@ orbs:
   node: circleci/node@5.0.2
   aws-cli: circleci/aws-cli@3.0.0
   eb: circleci/aws-elastic-beanstalk@2.0.1
-  # browser-tools: circleci/browser-tools@1.2.3
 jobs:
-  frontend-build-deploy:
+  frontend-build:
     docker:
       - image: "cimg/base:stable"
     steps:
@@ -33,13 +32,10 @@ jobs:
           command: |
             npm run frontend:deploy
   # frontend-test:
-  #   working_directory: ~/udagram-forntend
   #   docker:
-  #     - image: circleci/node:10-browsers
+  #     - image: "cimg/base:stable"
   #   steps:
   #     - node/install
-  #     - browser-tools/install-chrome
-  #     - browser-tools/install-chromedriver
   #     - checkout
   #     - run:
   #         name: Front-End Install Karma Cli
@@ -53,7 +49,7 @@ jobs:
   #         name: Front-End End-to-end Testing
   #         command: |
   #           npm run frontend:e2e
-  backend-build-deploy:
+  backend-build:
     docker:
       - image: "cimg/base:stable"
     steps:
@@ -80,9 +76,10 @@ jobs:
           name: Deploy Front-End
           command: |
             npm run backend:deploy
+
 workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - frontend-build-deploy
-      - backend-build-deploy
+      - frontend-build
+      - backend-build
