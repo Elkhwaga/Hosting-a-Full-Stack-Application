@@ -4,7 +4,7 @@ orbs:
   aws-cli: circleci/aws-cli@3.0.0
   eb: circleci/aws-elastic-beanstalk@2.0.1
 jobs:
-  frontend-build:
+  build:
     docker:
       - image: "cimg/base:stable"
     steps:
@@ -17,17 +17,13 @@ jobs:
           command: |
             npm run frontend:install
       - run:
-          name: Build Frontend
-          command: |
-            npm run frontend:build
-      - run:
-          name: Deploy Frontend
-          command: |
-            npm run frontend:deploy
-      - run:
           name: install dependencies Backend
           command: |
             npm run backend:install
+      - run:
+          name: Build Frontend
+          command: |
+            npm run frontend:build
       - run:
           name: Build Backend
           command: |
@@ -36,6 +32,10 @@ jobs:
           name: Deploy Front-End
           command: |
             npm run backend:deploy
+      - run:
+          name: Deploy Frontend
+          command: |
+            npm run frontend:deploy
   # frontend-test:
   #   working_directory: ~/udagram-forntend
   #   docker:
