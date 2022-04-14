@@ -11,18 +11,11 @@ jobs:
       - node/install
       - checkout
       - aws-cli/setup
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{checksum "package.json"}}
-            - v1-dependencies-
+      - eb/setup
       - run:
           name: install dependencies Frontend
           command: |
             npm run frontend:install
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{checksum "package.json"}}
       - run:
           name: Build Frontend
           command: |
@@ -31,6 +24,18 @@ jobs:
           name: Deploy Frontend
           command: |
             npm run frontend:deploy
+      - run:
+          name: install dependencies Backend
+          command: |
+            npm run backend:install
+      - run:
+          name: Build Backend
+          command: |
+            npm run backend:build
+      - run:
+          name: Deploy Front-End
+          command: |
+            npm run backend:deploy
   # frontend-test:
   #   working_directory: ~/udagram-forntend
   #   docker:
@@ -52,37 +57,3 @@ jobs:
   #         name: Front-End End-to-end Testing
   #         command: |
   #           npm run frontend:e2e
-  backend-build:
-    docker:
-      - image: "cimg/base:stable"
-    steps:
-      - node/install
-      - checkout
-      - eb/setup
-      - restore_cache:
-          keys:
-            - v2-dependencies-{{checksum "package.json"}}
-            - v2-dependencies-
-      - run:
-          name: install dependencies Backend
-          command: |
-            npm run backend:install
-      - save_cache:
-          paths:
-            - node_modules
-          key: v2-dependencies-{{checksum "package.json"}}
-      - run:
-          name: Build Backend
-          command: |
-            npm run backend:build
-      - run:
-          name: Deploy Front-End
-          command: |
-            npm run backend:deploy
-
-workflows:
-  version: 2
-  build_and_deploy:
-    jobs:
-      - frontend-build
-      - backend-build
