@@ -36,24 +36,3 @@ jobs:
           name: Deploy Frontend
           command: |
             npm run frontend:deploy
-  # frontend-test:
-  #   working_directory: ~/udagram-forntend
-  #   docker:
-  #     - image: circleci/node:10-browsers
-  #   steps:
-  #     - node/install
-  #     - browser-tools/install-chrome
-  #     - browser-tools/install-chromedriver
-  #     - checkout
-  #     - run:
-  #         name: Front-End Install Karma Cli
-  #         command: |
-  #           npm run frontend:karmaCli
-  #     - run:
-  #         name: Front-End Tests
-  #         command: |
-  #           npm run frontend:test
-  #     - run:
-  #         name: Front-End End-to-end Testing
-  #         command: |
-  #           npm run frontend:e2e
