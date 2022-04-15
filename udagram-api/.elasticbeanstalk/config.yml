@@ -1,6 +1,6 @@
 branch-defaults:
   default:
-    environment: null
+    environment: udagram-server-env
     group_suffix: null
 deploy:
   artifact: ./www/Archive.zip
