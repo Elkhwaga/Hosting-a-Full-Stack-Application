@@ -7,6 +7,7 @@
     "backend:build": "cd udagram-api && npm run build",
     "backend:deploy": "cd udagram-api && npm run deploy",
     "frontend:test": "cd udagram-frontend && npm run test",
+    "backend:test": "cd udagram-api && npm run test",
     "frontend:e2e": "cd udagram-frontend && npm run e2e",
     "frontend:karmaCli": "cd udagram-frontend && npm run karmaCli"
   }
