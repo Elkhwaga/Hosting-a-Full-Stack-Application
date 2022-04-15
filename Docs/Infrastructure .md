@@ -1,10 +1,19 @@
-# AWS Cloud Setup
+# Infrastructure
 
-## RDS Postgres
+This application, Udagram, is composed of a frontend and backend: udagram-frontend and
+udagram-api.
+udagram-frontend is an Angular application hosted in an S3 bucket by Amazon Web Services.
+udagram-api is an Express application that lives inside an Elastic Beanstalk environment by
+Amazon Web Services.
+There is also a PostgreSQL database that lives inside RDS by Amazon Web Services.
+
+## AWS Cloud Setup
+
+### RDS Postgres
 
 The application server uses AWS RDS Postgres as a database for storing and retrieving information.
 
-- RDS - Database Host: project.cqg1cl7skyby.us-east-1.rds.amazonaws.com
+- RDS - Database Host: database-3.crvcmn82t7hj.us-east-1.rds.amazonaws.com
 - RDS - Database Port: 5432
 - RDS - Database Name: postgres
 
